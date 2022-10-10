@@ -49,10 +49,6 @@ public class MainController {
 
         messageRepo.save(message);
 
-        Iterable<Message> messages = messageRepo.findAll();
-
-        model.put("messages", messages);
-
-        return "main";
+        return "redirect:/main";
     }
 }
