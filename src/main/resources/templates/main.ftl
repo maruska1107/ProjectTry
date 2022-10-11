@@ -1,4 +1,6 @@
+<#include "parts/security.ftl">
 <#import "parts/common.ftl" as c>
+
 
 <@c.page>
 <div class="form-row">
@@ -9,10 +11,11 @@
         </form>
     </div>
 </div>
+<#if !isAdmin>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Add new Message
+    </a>
 
-<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Add new Message
-</a>
 <div class="collapse" id="collapseExample">
     <div class="form-group mt-3">
         <form method="post" enctype="multipart/form-data">
@@ -35,23 +38,25 @@
         </form>
     </div>
 </div>
-
-<div class="card-columns">
-    <#list messages as message>
-    <div class="card my-3">
-        <#if message.filename??>
-        <img src="/img/${message.filename}" class="card-img-top">
-        </#if>
-        <div class="m-2">
-            <span>${message.text}</span>
-            <i>${message.tag}</i>
+</#if>
+<#if isAdmin>
+    <div class="card-columns">
+        <#list messages as message>
+        <div class="card my-3">
+            <#if message.filename??>
+            <img src="/img/${message.filename}" class="card-img-top">
+            </#if>
+            <div class="m-2">
+                <span>${message.text}</span>
+                <i>${message.tag}</i>
+            </div>
+            <div class="card-footer text-muted">
+                ${message.authorName}
+            </div>
         </div>
-        <div class="card-footer text-muted">
-            ${message.authorName}
-        </div>
+        <#else>
+        No message
+        </#list>
     </div>
-    <#else>
-    No message
-    </#list>
-</div>
+</#if>
 </@c.page>
